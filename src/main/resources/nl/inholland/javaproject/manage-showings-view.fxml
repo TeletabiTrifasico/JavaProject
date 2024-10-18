@@ -6,6 +6,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12"
       fx:controller="nl.inholland.javaproject.ManageShowingsController">
     <Label text="Manage Showings" style="-fx-font-size: 24px; -fx-font-weight: bold;" alignment="CENTER"/>
+    <Label fx:id="errorMessageLabel" textFill="RED" visible="false"/>
     <TableView fx:id="showingsTable" prefWidth="600">
         <columns>
             <TableColumn fx:id="startColumn" text="Start Time"/>

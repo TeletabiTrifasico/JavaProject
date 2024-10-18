@@ -3,6 +3,7 @@ package nl.inholland.javaproject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +24,9 @@ public class ManageShowingsController {
 
     @FXML
     private TableColumn<Showing, String> seatsLeftColumn;
+
+    @FXML
+    private Label errorMessageLabel;
 
     private ShowingDatabase showingDatabase;
 
@@ -91,10 +95,7 @@ public class ManageShowingsController {
     }
 
     private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        errorMessageLabel.setText(message);
+        errorMessageLabel.setVisible(true);
     }
 }

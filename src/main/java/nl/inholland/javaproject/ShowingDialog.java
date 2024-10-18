@@ -2,8 +2,10 @@ package nl.inholland.javaproject;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -17,8 +19,8 @@ public class ShowingDialog extends Dialog<Showing> {
     private ComboBox<String> startTimeComboBox;
     private DatePicker endDatePicker;
     private ComboBox<String> endTimeComboBox;
-
     private ButtonType saveButtonType;  // Declare saveButtonType
+    private Label errorMessageLabel = new Label();  // Error message label
 
     public ShowingDialog() {
         this(null);
@@ -72,12 +74,14 @@ public class ShowingDialog extends Dialog<Showing> {
 
     // Set up the dialog layout
     private void setupDialogLayout() {
+        errorMessageLabel.setTextFill(Color.RED);       // Set error text color to red
         VBox vbox = new VBox(10,
                 new Label("Title:"), titleField,
                 new Label("Start Date:"), startDatePicker,
                 new Label("Start Time:"), startTimeComboBox,
                 new Label("End Date:"), endDatePicker,
-                new Label("End Time:"), endTimeComboBox);
+                new Label("End Time:"), endTimeComboBox,
+                errorMessageLabel);
         getDialogPane().setContent(vbox);
 
         // Ensure the saveButtonType is added here before using it in lookupButton()
@@ -184,10 +188,6 @@ public class ShowingDialog extends Dialog<Showing> {
 
     // Show an error alert for validation failures
     private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Validation Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+        errorMessageLabel.setText(message);  // Display the error message in the label
     }
 }
