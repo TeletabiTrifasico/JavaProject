@@ -29,6 +29,8 @@ public class SellTicketsController {
     private TextField customerNameField;
     @FXML
     private Button sellTicketsButton;
+    @FXML
+    private Label errorMessageLabel;
 
     private List<Seat> allSeats;
     private ObservableList<String> selectedSeats;
@@ -163,11 +165,11 @@ public class SellTicketsController {
     protected void onSellTicketsClick() {
         String customerName = customerNameField.getText();
         if (customerName.isEmpty()) {
-            createModalDialog("Input Error", "Customer name is required.");
+            showError("Customer name is required.");
             return;
         }
         if (selectedSeats.isEmpty()) {
-            createModalDialog("Selection Error", "Please select at least one seat.");
+            showError("Please select at least one seat.");
             return;
         }
         Showing selectedShowing = showingsComboBox.getValue();
@@ -234,16 +236,9 @@ public class SellTicketsController {
         selectedSeats.clear();
     }
 
-    private void createModalDialog(String title, String message) {
-        Dialog<Void> errorDialog = new Dialog<>();
-        errorDialog.setTitle(title);
-
-        Label messageLabel = new Label(message);
-        ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        errorDialog.getDialogPane().getButtonTypes().addAll(closeButton);
-        errorDialog.getDialogPane().setContent(messageLabel);
-        errorDialog.showAndWait();
+    private void showError(String message) {
+        errorMessageLabel.setText(message);
+        errorMessageLabel.setVisible(true);
     }
 
     private static class Seat {
