@@ -26,7 +26,7 @@
     </HBox>
 
     <TextField fx:id="customerNameField" promptText="Customer name"/>
-    
+
     <Label fx:id="errorMessageLabel" textFill="RED" visible="false"/>
     <HBox spacing="20" alignment="CENTER">
         <Button fx:id="sellTicketsButton" text="Sell Tickets" onAction="#onSellTicketsClick" disable="true"/>
