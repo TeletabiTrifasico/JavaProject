@@ -55,14 +55,26 @@ public class SellTicketsController {
 
 
     private void initializeAfterDatabaseSet() {
+        setupShowingComboBox();
+    }
+
+    private void setupShowingComboBox() {
+        ObservableList<Showing> sortedShowings = getFutureSortedShowings();
+        showingsComboBox.setItems(sortedShowings);
+        setupShowingComboBoxConverter();
+        showingsComboBox.setOnAction(event -> handleShowingSelection());
+    }
+
+    private ObservableList<Showing> getFutureSortedShowings() {
         List<Showing> futureShowings = new ArrayList<>(showingDatabase.getShowings().filtered(showing -> {
             LocalDateTime showingStartTime = LocalDateTime.parse(showing.getStartTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             return showingStartTime.isAfter(LocalDateTime.now());
         }));
         futureShowings.sort(Comparator.comparing(showing -> LocalDateTime.parse(showing.getStartTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))));
-        ObservableList<Showing> sortedShowings = FXCollections.observableArrayList(futureShowings);
-        showingsComboBox.setItems(sortedShowings);
+        return FXCollections.observableArrayList(futureShowings);
+    }
 
+    private void setupShowingComboBoxConverter() {
         showingsComboBox.setConverter(new StringConverter<>() {
             @Override
             public String toString(Showing showing) {
@@ -74,8 +86,6 @@ public class SellTicketsController {
                 return null;
             }
         });
-
-        showingsComboBox.setOnAction(event -> handleShowingSelection());
     }
 
     private void setupSeatsGrid() {
