@@ -27,6 +27,11 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        if (username.isEmpty() || password.isEmpty()) {
+            errorMessage.setText("Username and password are required.");
+            return;
+        }
+
         if (userDatabase.validateUser(username, password)) {
             String role = userDatabase.getUserRole(username);
 

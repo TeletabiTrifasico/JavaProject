@@ -2,8 +2,8 @@ package nl.inholland.javaproject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +13,13 @@ class SalesDatabase {
 
     public SalesDatabase() {
         sales = FXCollections.observableArrayList();
-        loadFromFile();
+        loadFromFile();  // Load from file
+
+        // Add initial data if the database is empty
+        if (sales.isEmpty()) {
+            sales.add(new Sale("John Doe", "Avengers", LocalDateTime.now(), "14:00", 2));
+            sales.add(new Sale("Jane Smith", "Inception", LocalDateTime.now(), "17:00", 3));
+        }
     }
 
     public ObservableList<Sale> getSales() {

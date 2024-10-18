@@ -13,7 +13,14 @@ public class ShowingDatabase {
 
     public ShowingDatabase() {
         showings = FXCollections.observableArrayList();
-        loadFromFile();  // Load data when the database is instantiated
+        loadFromFile();  // Load from file
+
+        // Add some initial data if the database is empty
+        if (showings.isEmpty()) {
+            showings.add(new Showing("Avengers", "2024-12-01 14:00", "2024-12-01 16:30", 72));
+            showings.add(new Showing("Inception", "2024-12-01 17:00", "2024-12-01 19:30", 72));
+            showings.add(new Showing("Titanic", "2024-12-01 20:00", "2024-12-01 23:00", 72));
+        }
     }
 
     // Get the list of showings
