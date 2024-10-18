@@ -172,6 +172,8 @@ public class SellTicketsController {
             showError("Please select at least one seat.");
             return;
         }
+        // Once input is valid, hide the error message
+        errorMessageLabel.setVisible(false);
         Showing selectedShowing = showingsComboBox.getValue();
         int numSeats = selectedSeats.size();
         showConfirmationAlert(customerName, numSeats, selectedShowing);

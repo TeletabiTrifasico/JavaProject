@@ -27,6 +27,9 @@ public class MainController {
     @FXML
     private VBox contentArea;
 
+    @FXML
+    private Label accessDeniedLabel;
+
     private String role;
     private SalesDatabase salesDatabase;
     private ShowingDatabase showingDatabase;
@@ -50,7 +53,7 @@ public class MainController {
     @FXML
     protected void onManageShowingsClick() {
         if (!"admin".equals(role)) {
-            showAccessDeniedAlert();
+            showAccessDeniedMessage();
         } else {
             loadView("/nl/inholland/javaproject/manage-showings-view.fxml", "Manage Showings");
         }
@@ -59,7 +62,7 @@ public class MainController {
     @FXML
     protected void onViewSalesHistoryClick() {
         if (!"admin".equals(role)) {
-            showAccessDeniedAlert();
+            showAccessDeniedMessage();
         } else {
             loadView("/nl/inholland/javaproject/view-sales-history-view.fxml", "View Sales History");
         }
@@ -67,11 +70,13 @@ public class MainController {
 
     @FXML
     protected void onSellTicketsClick() {
+        accessDeniedLabel.setVisible(false);  // Hide error message when navigating to valid section
         loadView("/nl/inholland/javaproject/sell-tickets-view.fxml", "Sell Tickets");
     }
 
-    private void showAccessDeniedAlert() {
-        createModalDialog("Access Denied", "Your access level is insufficient to view this section!");
+    private void showAccessDeniedMessage() {
+        accessDeniedLabel.setText("Your access level is insufficient to view this section!");
+        accessDeniedLabel.setVisible(true);
     }
 
     private void showAlert(String message) {

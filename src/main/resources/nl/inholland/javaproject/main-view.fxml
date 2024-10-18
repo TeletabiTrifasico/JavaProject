@@ -14,6 +14,7 @@
     </top>
     <center>
         <VBox fx:id="contentArea" alignment="CENTER" spacing="20.0">
+            <Label fx:id="accessDeniedLabel" textFill="RED" visible="false"/>
             <Label fx:id="welcomeText"/>
             <Label fx:id="roleLabel"/>
             <Label fx:id="currentDateTimeLabel"/>
