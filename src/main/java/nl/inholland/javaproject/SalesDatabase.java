@@ -2,6 +2,7 @@ package nl.inholland.javaproject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
