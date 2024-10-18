@@ -24,15 +24,24 @@ public class ManageShowingsController {
     @FXML
     private TableColumn<Showing, String> seatsLeftColumn;
 
-    private final ShowingDatabase showingDatabase;
+    private ShowingDatabase showingDatabase;
 
-    public ManageShowingsController() {
-        // Get the singleton instance of ShowingDatabase
-        showingDatabase = ShowingDatabase.getInstance();
+    public void setDatabases(ShowingDatabase showingDatabase) {
+        this.showingDatabase = showingDatabase;
+        initializeAfterDatabaseSet();  // Initialize only after database is set
     }
 
     @FXML
     public void initialize() {
+        // Set up column factories (these don’t depend on the database)
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        seatsLeftColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSeatsLeftText()));
+    }
+
+    private void initializeAfterDatabaseSet() {
+        // Logic that depends on the showingDatabase
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -43,7 +52,6 @@ public class ManageShowingsController {
 
     @FXML
     protected void onAddShowing() {
-        // Logic to add a new showing
         ShowingDialog dialog = new ShowingDialog();
         Showing newShowing = dialog.showAndWait().orElse(null);
         if (newShowing != null) {

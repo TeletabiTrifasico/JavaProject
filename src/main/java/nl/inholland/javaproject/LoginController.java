@@ -17,6 +17,13 @@ public class LoginController {
     private Label errorMessage;
 
     private final UserDatabase userDatabase = new UserDatabase();
+    private SalesDatabase salesDatabase;
+    private ShowingDatabase showingDatabase;
+
+    public void setDatabases(SalesDatabase salesDatabase, ShowingDatabase showingDatabase) {
+        this.salesDatabase = salesDatabase;
+        this.showingDatabase = showingDatabase;
+    }
 
     @FXML
     protected void onLoginButtonClick() {
@@ -30,8 +37,8 @@ public class LoginController {
             Stage stage = (Stage) usernameField.getScene().getWindow();
             stage.close();
 
-            // Load main window with username and role
-            MainWindowLoader.loadMainWindow(username, role);
+            // Load main window with username, role, and databases
+            MainWindowLoader.loadMainWindow(username, role, salesDatabase, showingDatabase);
         } else {
             errorMessage.setText("Invalid username or password!");
         }

@@ -1,54 +1,54 @@
 package nl.inholland.javaproject;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Showing {
-    private final SimpleStringProperty title;
-    private final SimpleStringProperty startTime;
-    private final SimpleStringProperty endTime;
-    private final SimpleIntegerProperty availableSeats;
-    private final ObservableList<String> soldSeats;
+public class Showing implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private final String title;
+    private final String startTime;
+    private final String endTime;
+    private int availableSeats;
+    private final List<String> soldSeats;
 
     public Showing(String title, String startTime, String endTime, int totalSeats) {
-        this.title = new SimpleStringProperty(title);
-        this.startTime = new SimpleStringProperty(startTime);
-        this.endTime = new SimpleStringProperty(endTime);
-        this.availableSeats = new SimpleIntegerProperty(totalSeats);
-        this.soldSeats = FXCollections.observableArrayList();
+        this.title = title;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.availableSeats = totalSeats;
+        this.soldSeats = new ArrayList<>();
     }
 
+    // Getters and Setters
     public String getTitle() {
-        return title.get();
+        return title;
     }
 
     public String getStartTime() {
-        return startTime.get();
+        return startTime;
     }
 
     public String getEndTime() {
-        return endTime.get();
+        return endTime;
     }
 
     public int getAvailableSeats() {
-        return availableSeats.get();
+        return availableSeats;
     }
 
-    public ObservableList<String> getSoldSeats() {
+    public List<String> getSoldSeats() {
         return soldSeats;
     }
 
+    // Add sold seats and update available seats count
     public void addSoldSeats(List<String> seats) {
-        // Ensure that seats are added only once
         soldSeats.addAll(seats);
-        availableSeats.set(availableSeats.get() - seats.size());
+        availableSeats -= seats.size();
     }
 
     public String getSeatsLeftText() {
-        return availableSeats.get() + "/72";
+        return availableSeats + "/72";
     }
 }

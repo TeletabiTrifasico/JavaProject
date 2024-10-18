@@ -22,27 +22,34 @@ public class ViewSalesHistoryController {
     private TableColumn<Sale, String> numberOfTicketsColumn;
 
     @FXML
-    private TableColumn<Sale, String> movieTimeColumn;  // Declare movieTimeColumn
+    private TableColumn<Sale, String> movieTimeColumn;
 
+    private SalesDatabase salesDatabase;
 
-    private final SalesDatabase salesDatabase;
-
-    public ViewSalesHistoryController() {
-        // Instantiate SalesDatabase using the singleton pattern
-        salesDatabase = SalesDatabase.getInstance();
+    public void setDatabases(SalesDatabase salesDatabase) {
+        this.salesDatabase = salesDatabase;
+        initializeAfterDatabaseSet();  // Initialize only after database is set
     }
 
     @FXML
     public void initialize() {
-        // Initialize the table columns and load sales history
+        // Set up column factories for the sales table (this doesn’t depend on the database)
         customerNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
         showingTitleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getShowingTitle()));
         saleTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSaleTime()));
-        movieTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMovieTime())); // Ensure this is correct
+        movieTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMovieTime()));
         numberOfTicketsColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumberOfTickets())));
-
-        // Set the items of the table view to reflect current sales history
-        salesTable.setItems(salesDatabase.getSales());
     }
 
+
+    private void initializeAfterDatabaseSet() {
+        // Logic that depends on the salesDatabase
+        customerNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
+        showingTitleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getShowingTitle()));
+        saleTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getSaleTime()));
+        movieTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getMovieTime()));
+        numberOfTicketsColumn.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getNumberOfTickets())));
+
+        salesTable.setItems(salesDatabase.getSales());
+    }
 }

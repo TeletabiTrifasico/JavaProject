@@ -3,19 +3,17 @@ package nl.inholland.javaproject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 class SalesDatabase {
-    private static SalesDatabase instance;
-    private ObservableList<Sale> sales;
+    private final ObservableList<Sale> sales;
+    private static final String FILE_PATH = "sales.dat";  // File path for sales database
 
-    private SalesDatabase() {
+    public SalesDatabase() {
         sales = FXCollections.observableArrayList();
-    }
-
-    public static SalesDatabase getInstance() {
-        if (instance == null) {
-            instance = new SalesDatabase();
-        }
-        return instance;
+        loadFromFile();
     }
 
     public ObservableList<Sale> getSales() {
@@ -24,7 +22,26 @@ class SalesDatabase {
 
     public void addSale(Sale sale) {
         sales.add(sale);
-        // Update the showing to mark these seats as sold
-        ShowingDatabase.getInstance().updateShowingWithSoldSeats(sale.getShowingTitle(), sale.getSoldSeats());
+        saveToFile();  // Save changes immediately after adding
+    }
+
+    public void saveToFile() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FILE_PATH))) {
+            oos.writeObject(new ArrayList<>(sales));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadFromFile() {
+        File file = new File(FILE_PATH);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                List<Sale> loadedSales = (List<Sale>) ois.readObject();
+                sales.addAll(loadedSales);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
