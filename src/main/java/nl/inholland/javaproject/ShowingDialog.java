@@ -39,6 +39,13 @@ public class ShowingDialog extends Dialog<Showing> {
         setupAutoEndTimeFeature();  // New method to autofill end date/time
     }
 
+    // Generate time options in 30-minute intervals for the time pickers
+    private static java.util.List<String> generateTimeOptions() {
+        return IntStream.range(0, 24 * 2)  // 24 hours in 30-minute intervals
+                .mapToObj(i -> String.format("%02d:%02d", i / 2, (i % 2) * 30))
+                .toList();
+    }
+
     // Initialize fields
     private void initializeFields() {
         titleField = new TextField();
@@ -182,12 +189,5 @@ public class ShowingDialog extends Dialog<Showing> {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    // Generate time options in 30-minute intervals for the time pickers
-    private static java.util.List<String> generateTimeOptions() {
-        return IntStream.range(0, 24 * 2)  // 24 hours in 30-minute intervals
-                .mapToObj(i -> String.format("%02d:%02d", i / 2, (i % 2) * 30))
-                .toList();
     }
 }

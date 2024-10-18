@@ -11,6 +11,10 @@ public class CinemaApplication extends Application {
     private SalesDatabase salesDatabase;
     private ShowingDatabase showingDatabase;
 
+    public static void main(String[] args) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         salesDatabase = new SalesDatabase();
@@ -29,9 +33,5 @@ public class CinemaApplication extends Application {
             showingDatabase.saveToFile();
             salesDatabase.saveToFile();
         });
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 }

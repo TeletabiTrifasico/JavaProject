@@ -7,16 +7,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoginController {
+    private final UserDatabase userDatabase = new UserDatabase();
     @FXML
     private TextField usernameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Label errorMessage;
-
-    private final UserDatabase userDatabase = new UserDatabase();
     private SalesDatabase salesDatabase;
     private ShowingDatabase showingDatabase;
 

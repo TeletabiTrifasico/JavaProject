@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.inholland.javaproject.ManageShowingsController">
-    <Label text="Manage Showings" style="-fx-font-size: 24px; -fx-font-weight: bold;" alignment="CENTER" />
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12"
+      fx:controller="nl.inholland.javaproject.ManageShowingsController">
+    <Label text="Manage Showings" style="-fx-font-size: 24px; -fx-font-weight: bold;" alignment="CENTER"/>
     <TableView fx:id="showingsTable" prefWidth="600">
         <columns>
-            <TableColumn fx:id="startColumn" text="Start Time" />
-            <TableColumn fx:id="endColumn" text="End Time" />
-            <TableColumn fx:id="titleColumn" text="Title" />
-            <TableColumn fx:id="seatsLeftColumn" text="Seats Left" />
+            <TableColumn fx:id="startColumn" text="Start Time"/>
+            <TableColumn fx:id="endColumn" text="End Time"/>
+            <TableColumn fx:id="titleColumn" text="Title"/>
+            <TableColumn fx:id="seatsLeftColumn" text="Seats Left"/>
         </columns>
     </TableView>
 
     <HBox spacing="10">
-        <Button onAction="#onAddShowing" text="Add Showing" />
-        <Button onAction="#onEditShowing" text="Edit Showing" />
-        <Button onAction="#onDeleteShowing" text="Delete Showing" />
+        <Button onAction="#onAddShowing" text="Add Showing"/>
+        <Button onAction="#onEditShowing" text="Edit Showing"/>
+        <Button onAction="#onDeleteShowing" text="Delete Showing"/>
     </HBox>
 </VBox>
 

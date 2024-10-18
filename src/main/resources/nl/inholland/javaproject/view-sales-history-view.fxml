@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.inholland.javaproject.ViewSalesHistoryController">
-    <Label text="View Sales History" style="-fx-font-size: 24px; -fx-font-weight: bold;" alignment="CENTER" />
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12"
+      fx:controller="nl.inholland.javaproject.ViewSalesHistoryController">
+    <Label text="View Sales History" style="-fx-font-size: 24px; -fx-font-weight: bold;" alignment="CENTER"/>
     <TableView fx:id="salesTable">
         <columns>
-            <TableColumn fx:id="saleTimeColumn" text="Date/time" />
-            <TableColumn fx:id="numberOfTicketsColumn" text="Number of tickets" />
-            <TableColumn fx:id="customerNameColumn" text="Customer" />
-            <TableColumn fx:id="showingTitleColumn" text="Showing" />
-            <TableColumn fx:id="movieTimeColumn" text="Movie Time" />
+            <TableColumn fx:id="saleTimeColumn" text="Date/time"/>
+            <TableColumn fx:id="numberOfTicketsColumn" text="Number of tickets"/>
+            <TableColumn fx:id="customerNameColumn" text="Customer"/>
+            <TableColumn fx:id="showingTitleColumn" text="Showing"/>
+            <TableColumn fx:id="movieTimeColumn" text="Movie Time"/>
         </columns>
     </TableView>
 </VBox>

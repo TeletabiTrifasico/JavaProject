@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<BorderPane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.inholland.javaproject.MainController">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12"
+            fx:controller="nl.inholland.javaproject.MainController">
     <top>
         <ToolBar>
-            <Button fx:id="manageShowingsButton" text="Manage Showings" onAction="#onManageShowingsClick" />
-            <Button fx:id="viewSalesHistoryButton" text="View Sales History" onAction="#onViewSalesHistoryClick" />
-            <Button fx:id="sellTicketsButton" text="Sell Tickets" onAction="#onSellTicketsClick" />
+            <Button fx:id="manageShowingsButton" text="Manage Showings" onAction="#onManageShowingsClick"/>
+            <Button fx:id="viewSalesHistoryButton" text="View Sales History" onAction="#onViewSalesHistoryClick"/>
+            <Button fx:id="sellTicketsButton" text="Sell Tickets" onAction="#onSellTicketsClick"/>
         </ToolBar>
     </top>
     <center>
         <VBox fx:id="contentArea" alignment="CENTER" spacing="20.0">
-            <Label fx:id="welcomeText" />
-            <Label fx:id="roleLabel" />
-            <Label fx:id="currentDateTimeLabel" />
+            <Label fx:id="welcomeText"/>
+            <Label fx:id="roleLabel"/>
+            <Label fx:id="currentDateTimeLabel"/>
         </VBox>
     </center>
 </BorderPane>

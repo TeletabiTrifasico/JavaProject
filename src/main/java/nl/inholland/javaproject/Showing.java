@@ -10,8 +10,8 @@ public class Showing implements Serializable {
     private final String title;
     private final String startTime;
     private final String endTime;
-    private int availableSeats;
     private final List<String> soldSeats;
+    private int availableSeats;
 
     public Showing(String title, String startTime, String endTime, int totalSeats) {
         this.title = title;

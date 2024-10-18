@@ -2,13 +2,14 @@ package nl.inholland.javaproject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShowingDatabase {
-    private final ObservableList<Showing> showings;  // ObservableList for UI binding
     private static final String FILE_PATH = "showings.dat";  // File to store showings
+    private final ObservableList<Showing> showings;  // ObservableList for UI binding
 
     public ShowingDatabase() {
         showings = FXCollections.observableArrayList();

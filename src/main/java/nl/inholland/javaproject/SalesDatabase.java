@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class SalesDatabase {
-    private final ObservableList<Sale> sales;
     private static final String FILE_PATH = "sales.dat";  // File path for sales database
+    private final ObservableList<Sale> sales;
 
     public SalesDatabase() {
         sales = FXCollections.observableArrayList();

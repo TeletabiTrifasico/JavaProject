@@ -36,13 +36,12 @@ public class SellTicketsController {
     private SalesDatabase salesDatabase;
 
     public SellTicketsController() {
-        // Constructor no longer needs to access singletons
     }
 
     public void setDatabases(SalesDatabase salesDatabase, ShowingDatabase showingDatabase) {
         this.salesDatabase = salesDatabase;
         this.showingDatabase = showingDatabase;
-        initializeAfterDatabaseSet();  // Call custom initialization after databases are set
+        initializeAfterDatabaseSet();  // Call initialization after databases are set
     }
 
     @FXML
@@ -50,13 +49,12 @@ public class SellTicketsController {
         allSeats = new ArrayList<>();
         selectedSeats = FXCollections.observableArrayList();
         selectedSeatsList.setItems(selectedSeats);
-        setupSeatsGrid(); // This just sets up buttons for the seat grid, which doesn't depend on the database
+        setupSeatsGrid();
         seatsGrid.setDisable(true); // Initially disable the grid until a showing is selected
     }
 
 
     private void initializeAfterDatabaseSet() {
-        // Now that databases are set, do any logic that depends on the databases here.
         List<Showing> futureShowings = new ArrayList<>(showingDatabase.getShowings().filtered(showing -> {
             LocalDateTime showingStartTime = LocalDateTime.parse(showing.getStartTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
             return showingStartTime.isAfter(LocalDateTime.now());
@@ -218,17 +216,24 @@ public class SellTicketsController {
         }
     }
 
-    @FXML
-    protected void onCancelClick() {
-        resetAfterSale();
-    }
-
     private void resetAfterSale() {
         for (Seat seat : allSeats) {
             seat.setSelected(false);
             seat.getButton().setStyle("-fx-background-color: grey;");
         }
         selectedSeats.clear();
+    }
+
+    private void createModalDialog(String title, String message) {
+        Dialog<Void> errorDialog = new Dialog<>();
+        errorDialog.setTitle(title);
+
+        Label messageLabel = new Label(message);
+        ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        errorDialog.getDialogPane().getButtonTypes().addAll(closeButton);
+        errorDialog.getDialogPane().setContent(messageLabel);
+        errorDialog.showAndWait();
     }
 
     private static class Seat {
@@ -263,17 +268,5 @@ public class SellTicketsController {
         public void setSelected(boolean selected) {
             this.selected = selected;
         }
-    }
-
-    private void createModalDialog(String title, String message) {
-        Dialog<Void> errorDialog = new Dialog<>();
-        errorDialog.setTitle(title);
-
-        Label messageLabel = new Label(message);
-        ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        errorDialog.getDialogPane().getButtonTypes().addAll(closeButton);
-        errorDialog.getDialogPane().setContent(messageLabel);
-        errorDialog.showAndWait();
     }
 }
