@@ -8,7 +8,7 @@
 
     <!-- Search Field for filtering showings -->
     <HBox spacing="10">
-        <Label text="Search: " />
+        <Label text="Search: "/>
         <TextField fx:id="searchField" promptText="Enter (part of) the title" prefWidth="300"/>
     </HBox>
 

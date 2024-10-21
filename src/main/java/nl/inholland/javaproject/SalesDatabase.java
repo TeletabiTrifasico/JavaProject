@@ -17,10 +17,10 @@ class SalesDatabase {
         loadFromFile();  // Load from file
 
         // Add initial data if the database is empty
-//        if (sales.isEmpty()) {
-//            sales.add(new Sale("John Doe", "Avengers", LocalDateTime.now(), "14:00", 2));
-//            sales.add(new Sale("Jane Smith", "Inception", LocalDateTime.now(), "17:00", 3));
-//        }
+        if (sales.isEmpty()) {
+            sales.add(new Sale("John Doe", "Avengers", LocalDateTime.now(), "14:00", 2));
+            sales.add(new Sale("Jane Smith", "Inception", LocalDateTime.now(), "17:00", 3));
+        }
     }
 
     public ObservableList<Sale> getSales() {
