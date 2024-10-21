@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 
 import java.time.LocalDateTime;
@@ -32,10 +33,14 @@ public class SellTicketsController {
     @FXML
     private Label errorMessageLabel;
 
+    @FXML
+    private TextField searchField; // Add this search field for filtering showings
+
     private List<Seat> allSeats;
     private ObservableList<String> selectedSeats;
     private ShowingDatabase showingDatabase;
     private SalesDatabase salesDatabase;
+    private ObservableList<Showing> allShowings; // Store the list of all showings
 
     public SellTicketsController() {
     }
@@ -53,16 +58,17 @@ public class SellTicketsController {
         selectedSeatsList.setItems(selectedSeats);
         setupSeatsGrid();
         seatsGrid.setDisable(true); // Initially disable the grid until a showing is selected
-    }
 
+        setupSearchFieldListener();  // Initialize search functionality
+    }
 
     private void initializeAfterDatabaseSet() {
         setupShowingComboBox();
     }
 
     private void setupShowingComboBox() {
-        ObservableList<Showing> sortedShowings = getFutureSortedShowings();
-        showingsComboBox.setItems(sortedShowings);
+        allShowings = getFutureSortedShowings();  // Store all future showings
+        showingsComboBox.setItems(allShowings);
         setupShowingComboBoxConverter();
         showingsComboBox.setOnAction(event -> handleShowingSelection());
     }
@@ -176,7 +182,42 @@ public class SellTicketsController {
         errorMessageLabel.setVisible(false);
         Showing selectedShowing = showingsComboBox.getValue();
         int numSeats = selectedSeats.size();
-        showConfirmationAlert(customerName, numSeats, selectedShowing);
+
+        // Check if the movie requires an age check
+        if (selectedShowing.isAgeCheckRequired()) {
+            showAgeCheckConfirmation(customerName, numSeats, selectedShowing);
+        } else {
+            showConfirmationAlert(customerName, numSeats, selectedShowing);
+        }
+    }
+
+    private void showAgeCheckConfirmation(String customerName, int numSeats, Showing showing) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Age Check Required");
+        confirmationAlert.setHeaderText("Age Check Required");
+
+        VBox content = new VBox(10);
+        Label info = new Label(
+                "Movie: " + showing.getTitle() + "\n" +
+                        "Date and time: " + showing.getStartTime() + "\n" +
+                        "Number of tickets: " + numSeats + "\n" +
+                        "Customer name: " + customerName
+        );
+        CheckBox ageCheckBox = new CheckBox("I have checked the ID and confirmed the customer is 16+.");
+        ageCheckBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            confirmationAlert.getDialogPane().lookupButton(ButtonType.OK).setDisable(!newValue);
+        });
+        content.getChildren().addAll(info, ageCheckBox);
+        confirmationAlert.getDialogPane().setContent(content);
+
+        confirmationAlert.getButtonTypes().setAll(ButtonType.OK, ButtonType.CANCEL);
+        confirmationAlert.getDialogPane().lookupButton(ButtonType.OK).setDisable(true);  // Initially disabled
+
+        confirmationAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                processTicketSale(customerName, numSeats, showing);
+            }
+        });
     }
 
     private void showConfirmationAlert(String customerName, int numSeats, Showing showing) {
@@ -241,6 +282,22 @@ public class SellTicketsController {
     private void showError(String message) {
         errorMessageLabel.setText(message);
         errorMessageLabel.setVisible(true);
+    }
+
+    private void setupSearchFieldListener() {
+        // Add a listener to the searchField TextField to filter showings
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() < 3) {
+                // Show full list when less than 3 characters are typed
+                showingsComboBox.setItems(allShowings);
+            } else {
+                // Filter showings based on input
+                ObservableList<Showing> filteredShowings = allShowings.filtered(showing ->
+                        showing.getTitle().toLowerCase().contains(newValue.toLowerCase())
+                );
+                showingsComboBox.setItems(filteredShowings);
+            }
+        });
     }
 
     private static class Seat {

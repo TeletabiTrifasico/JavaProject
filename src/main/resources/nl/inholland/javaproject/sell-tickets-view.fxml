@@ -6,6 +6,12 @@
       fx:controller="nl.inholland.javaproject.SellTicketsController">
     <Label text="Sell Tickets" style="-fx-font-size: 24px; -fx-font-weight: bold;" alignment="CENTER"/>
 
+    <!-- Search Field for filtering showings -->
+    <HBox spacing="10">
+        <Label text="Search: " />
+        <TextField fx:id="searchField" promptText="Enter (part of) the title" prefWidth="300"/>
+    </HBox>
+
     <HBox spacing="10">
         <Label text="Select showing: "/>
         <ComboBox fx:id="showingsComboBox" promptText="Select a movie showing" prefWidth="300"/>

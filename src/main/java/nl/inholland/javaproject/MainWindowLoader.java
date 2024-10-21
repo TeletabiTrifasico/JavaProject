@@ -11,7 +11,7 @@ public class MainWindowLoader {
     public static void loadMainWindow(String username, String role, SalesDatabase salesDatabase, ShowingDatabase showingDatabase) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindowLoader.class.getResource("main-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 780, 590);
+            Scene scene = new Scene(fxmlLoader.load(), 780, 630);
 
             MainController controller = fxmlLoader.getController();
             controller.setUserInfo(username, role);

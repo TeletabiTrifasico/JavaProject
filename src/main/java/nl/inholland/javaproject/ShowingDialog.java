@@ -20,6 +20,7 @@ public class ShowingDialog extends Dialog<Showing> {
     private ComboBox<String> endTimeComboBox;
     private ButtonType saveButtonType;  // Declare saveButtonType
     private Label errorMessageLabel = new Label();  // Error message label
+    private CheckBox ageCheckBox;  // New checkbox for age check
 
     public ShowingDialog() {
         this(null);
@@ -27,6 +28,7 @@ public class ShowingDialog extends Dialog<Showing> {
 
     public ShowingDialog(Showing showing) {
         initializeFields();
+        ageCheckBox = new CheckBox("Age check required (16+)");
         // Set items for time pickers directly from generateTimeOptions
         startTimeComboBox.setItems(FXCollections.observableArrayList(generateTimeOptions()));
         endTimeComboBox.setItems(FXCollections.observableArrayList(generateTimeOptions()));
@@ -69,6 +71,8 @@ public class ShowingDialog extends Dialog<Showing> {
         startTimeComboBox.setValue(showing.getStartTime().split(" ")[1]);
         endDatePicker.setValue(LocalDate.parse(showing.getEndTime().split(" ")[0]));
         endTimeComboBox.setValue(showing.getEndTime().split(" ")[1]);
+        ageCheckBox.setSelected(showing.isAgeCheckRequired());  // Set the age check value
+
     }
 
     // Set up the dialog layout
@@ -80,7 +84,8 @@ public class ShowingDialog extends Dialog<Showing> {
                 new Label("Start Time:"), startTimeComboBox,
                 new Label("End Date:"), endDatePicker,
                 new Label("End Time:"), endTimeComboBox,
-                errorMessageLabel);
+                errorMessageLabel,
+                ageCheckBox);  // Add checkbox to the dialog
         getDialogPane().setContent(vbox);
 
         // Ensure the saveButtonType is added here before using it in lookupButton()
@@ -115,7 +120,9 @@ public class ShowingDialog extends Dialog<Showing> {
                 titleField.getText(),
                 startTime,
                 endTime,
-                72  // Default seats count
+                72,  // Default seats count
+                ageCheckBox.isSelected()  // Get age check value
+
         );
     }
 

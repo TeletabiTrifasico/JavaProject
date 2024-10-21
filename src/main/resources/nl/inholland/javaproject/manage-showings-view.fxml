@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+
 <VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.12"
       fx:controller="nl.inholland.javaproject.ManageShowingsController">
     <Label text="Manage Showings" style="-fx-font-size: 24px; -fx-font-weight: bold;" alignment="CENTER"/>
@@ -20,6 +20,6 @@
         <Button onAction="#onAddShowing" text="Add Showing"/>
         <Button onAction="#onEditShowing" text="Edit Showing"/>
         <Button onAction="#onDeleteShowing" text="Delete Showing"/>
+        <Button onAction="#onExportShowings" text="Export to CSV"/>
     </HBox>
 </VBox>
-
